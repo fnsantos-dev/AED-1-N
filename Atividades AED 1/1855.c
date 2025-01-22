@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MAX 100
 
@@ -38,13 +39,10 @@ int main(){
             x++;
         } else if (simbolo == '^') { 
             x--;
-        } else if (simbolo == '.') {  
-            printf("!\n");
-            return 0;
-        } else { 
-            printf("!\n");
-            return 0;
+        } else if (simbolo == '.') {
+            // Apenas continue
         }
+
     }
 }
 
