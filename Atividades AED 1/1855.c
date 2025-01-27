@@ -40,7 +40,6 @@ int main(){
         } else if (simbolo == '^') { 
             x--;
         } else if (simbolo == '.') {
-            // Apenas continue
         }
 
     }

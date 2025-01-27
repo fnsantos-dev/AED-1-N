@@ -6,9 +6,7 @@ typedef struct Lista
     int cont;
     struct Lista *seg;
     
-};
-typedef struct Lista list;
-
+}list;
 int main(){
     list *lst;
     lst = malloc (sizeof (list));
@@ -18,9 +16,21 @@ int main(){
 list *busca(int x, list *lst){
     list *p;
     p = lst->seg;
-    while (p =! NULL && p->cont =! x){
+    while (p != NULL && p->cont != x){
         p= p->seg;
     }
     return p;
+}
+
+int min(list *lst, int x){
+    list *p;
+    p= lst->seg;
+    if(p !=NULL && p->cont>p->seg){
+        x = cont;
+    }
+    else:{
+        return min(int x);
+    }
+    free(lst);
 }
 
