@@ -16,7 +16,6 @@ arvore inicializa(int x) {
     novo->dir = NULL;
     return novo;
 }
-
 void insere(arvore *p, int valor) {
     if (*p == NULL) {
         *p = inicializa(valor);
@@ -67,7 +66,6 @@ void imprimenor(arvore p) {
         nivelAtual++;
     }
 }
-
 int main() {
     int n;
     scanf("%d", &n);
