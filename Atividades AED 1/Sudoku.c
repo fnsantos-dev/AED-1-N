@@ -1,6 +1,6 @@
 #include <stdio.h>
 #define TAMANHO 9
-//VER = VERIFICAR
+
 int ver_linha(int sudoku[TAMANHO][TAMANHO], int linha) {
     int numeros[TAMANHO + 1] = {0};
     for (int i = 0; i < TAMANHO; i++) {
