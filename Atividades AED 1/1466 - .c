@@ -9,7 +9,6 @@ typedef struct no {
 
 typedef struct no *arvore;
 
-// Função para criar um novo nó
 arvore inicializa(int x) {
     arvore novo = (arvore)malloc(sizeof(no));
     if (novo == NULL) {
@@ -22,7 +21,6 @@ arvore inicializa(int x) {
     return novo;
 }
 
-// Função para inserir um valor na árvore
 void insere(arvore *p, int valor) {
     if (*p == NULL) {
         *p = inicializa(valor);
@@ -32,8 +30,6 @@ void insere(arvore *p, int valor) {
         insere(&(*p)->dir, valor);
     }
 }
-
-// Função para liberar a memória da árvore
 void libera(arvore p) {
     if (p != NULL) {
         libera(p->esq);
@@ -41,8 +37,6 @@ void libera(arvore p) {
         free(p);
     }
 }
-
-// Função para imprimir a árvore por nível (BFS)
 void imprime(arvore raiz) {
     if (raiz == NULL) return;
 

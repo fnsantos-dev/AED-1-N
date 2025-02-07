@@ -1,91 +1,108 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #define vertex int
-struct Graph{
-    int V;
-    int A;
-    link *adj;
-};
+
 typedef struct Graph *Graph;
 typedef struct node *link;
 
-struct node{
+struct node {
     vertex w;
     int valor;
     link next;
 };
 
-static link Newnod(vertex w, int valor, link next){
+struct Graph {
+    int V;
+    int A;
+    link *adj;
+};
+
+static link Newnod(vertex w, int valor, link next) {
     link a = malloc(sizeof(struct node));
     a->w = w;
     a->next = next;
     a->valor = valor;
     return a;
 }
-Graph init(int v){
-    Graph novo = malloc(sizeof(struct *novo));
-    novo->v = v;
-    novo-> a = NULL;
-    novo->adj = malloc(v *sizeof(link));
-    for(vertex i =0; i<v; i++){
-        novo -> adj[i] = NULL;
+
+Graph init(int v) {
+    Graph novo = malloc(sizeof(struct Graph));
+    novo->V = v;
+    novo->A = 0;
+    novo->adj = malloc(v * sizeof(link));
+    for (vertex i = 0; i < v; i++) {
+        novo->adj[i] = NULL;
     }
-    return novo; 
+    return novo;
 }
-void insert(Graph G,  vertex v, vertex w,int valor){
-    G->adj[v] = Newnode(w,valor,novo->adj[v]);
-    G->adj[w] = Newnode(w,valor, novo->adj[w]);
-    novo->A++;
+
+void insert(Graph G, vertex v, vertex w, int valor) {
+    G->adj[v] = Newnod(w, valor, G->adj[v]);
+    G->adj[w] = Newnod(v, valor, G->adj[w]);
+    G->A++;
 }
-busca( Graph G , vertex node, int *visitado){
-    visitado[node]= 1;
-    for(link a = G->adj[node]; a!= NULL; a = a->next){
-        if(!visited[a->w]){
+
+void busca(Graph G, vertex node, int *visitado) {
+    visitado[node] = 1;
+    for (link a = G->adj[node]; a != NULL; a = a->next) {
+        if (!visitado[a->w]) {
             busca(G, a->w, visitado);
         }
     }
 }
-int conexao(Graph G){
+
+int conexao(Graph G) {
     int *visitado = calloc(G->V, sizeof(int));
-    int inicio = -1;
-    for(int i = 0; i< G->V; i++){
-        inicio = i;
-        break;
-    }
-    if( inicio == -1){
-        return 1;
-    }
+    int inicio = 0; // Pode começar do primeiro nó
     busca(G, inicio, visitado);
-    for(int i = 0 ;i<G->V; i++){
-        if(G->adj[i] !=NULL && !visitado[i]){
+
+    for (int i = 0; i < G->V; i++) {
+        if (G->adj[i] != NULL && !visitado[i]) {
             free(visitado);
             return 0;
         }
     }
+
     free(visitado);
     return 1;
 }
-int main(){
+
+int main() {
     int T;
     scanf("%d", &T);
-    while(T--){
+    
+    while (T--) {
         int inicio, V, A;
-        scanf("%d %d %d" , &inicio , &V , &A);
+        scanf("%d %d %d", &inicio, &V, &A);
+        
         Graph G = init(V);
-        for(int i = 0; i<A;i++){
-            int u,v, valor = 1;
+        
+        for (int i = 0; i < A; i++) {
+            int u, v, valor = 1;
             scanf("%d %d", &u, &v);
-            insert(G, u,v,valor);
-
+            insert(G, u, v, valor);
         }
-        if(!conexao(G)){
+        
+        if (!conexao(G)) {
             printf("-1\n");
-        }
-        else{
+        } else {
             printf("%d\n", A);
         }
-    free(G->adj);
-    free(G);
+        
+        // Liberação de memória
+        for (int i = 0; i < G->V; i++) {
+            link temp;
+            while (G->adj[i] != NULL) {
+                temp = G->adj[i];
+                G->adj[i] = G->adj[i]->next;
+                free(temp);
+            }
+        }
+        
+        free(G->adj);
+        free(G);
     }
+    
     return 0;
 }
