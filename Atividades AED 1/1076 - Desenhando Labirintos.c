@@ -42,7 +42,6 @@ void insert(Graph G, vertex v, vertex w, int valor) {
     G->adj[w] = Newnod(v, valor, G->adj[w]);
     G->A++;
 }
-
 void busca(Graph G, vertex node, int *visitado) {
     visitado[node] = 1;
     for (link a = G->adj[node]; a != NULL; a = a->next) {
@@ -51,19 +50,16 @@ void busca(Graph G, vertex node, int *visitado) {
         }
     }
 }
-
 int conexao(Graph G) {
     int *visitado = calloc(G->V, sizeof(int));
-    int inicio = 0; // Pode começar do primeiro nó
+    int inicio = 0;
     busca(G, inicio, visitado);
-
     for (int i = 0; i < G->V; i++) {
         if (G->adj[i] != NULL && !visitado[i]) {
             free(visitado);
             return 0;
         }
     }
-
     free(visitado);
     return 1;
 }
@@ -71,26 +67,20 @@ int conexao(Graph G) {
 int main() {
     int T;
     scanf("%d", &T);
-    
     while (T--) {
         int inicio, V, A;
         scanf("%d %d %d", &inicio, &V, &A);
-        
         Graph G = init(V);
-        
         for (int i = 0; i < A; i++) {
             int u, v, valor = 1;
             scanf("%d %d", &u, &v);
             insert(G, u, v, valor);
         }
-        
         if (!conexao(G)) {
             printf("-1\n");
         } else {
             printf("%d\n", A);
         }
-        
-        // Liberação de memória
         for (int i = 0; i < G->V; i++) {
             link temp;
             while (G->adj[i] != NULL) {
@@ -99,10 +89,8 @@ int main() {
                 free(temp);
             }
         }
-        
         free(G->adj);
         free(G);
     }
-    
     return 0;
 }
